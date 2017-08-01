@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+
 import './App.css';
 
 
@@ -7,7 +7,7 @@ class ResultRow extends React.Component {
   render(){
     return(
       <tr>
-        <td>{this.props.score}</td>
+        <th scope="row">{this.props.score}</th>
         <td>{this.props.firstname}</td>
         <td>{this.props.lastname}</td>
       </tr>
@@ -27,10 +27,9 @@ class ResultTable extends React.Component {
 
   }
 
-
   render() {
     return (
-      <table class="table table-striped">
+      <table className="table table-striped">
         <thead>
           <tr>
             <th>Score</th>
@@ -46,7 +45,6 @@ class ResultTable extends React.Component {
           })
         }
 
-
         </tbody>
       </table>
     );
@@ -57,14 +55,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+        <div className="container">
+          <header>
+            <h1>Results</h1>
+          </header>
+          <ResultTable />
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <ResultTable />
       </div>
     );
   }
