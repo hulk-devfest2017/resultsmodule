@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
 import './App.css';
+import io from 'socket.io-client';
+
+const socket = io()
 
 
 class ResultRow extends React.Component {
@@ -17,6 +20,7 @@ class ResultRow extends React.Component {
 class ResultTable extends React.Component {
 
   constructor() {
+    console.log('constructor');
     super();
     this.state = {
       results: Array(0)
@@ -26,6 +30,20 @@ class ResultTable extends React.Component {
     this.state.results.push({"firstname":"titi","lastname":"dfsdfd","score":100});
 
   }
+
+  componentWillMount(){
+     console.log('componentWillMount');
+      var self = this;
+      socket.on('results', function (data) {
+        console.log(data);
+        console.log(self.state);
+        console.log(self);
+        var results = self.state.results.slice();
+        results.push(JSON.parse(data));
+        self.setState({results: results})
+      });
+  }
+
 
   render() {
     return (
