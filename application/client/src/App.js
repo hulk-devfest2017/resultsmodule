@@ -25,10 +25,6 @@ class ResultTable extends React.Component {
     this.state = {
       results: Array(0)
     };
-
-    this.state.results.push({"firstname":"toto","lastname":"dfsdfd","score":300});
-    this.state.results.push({"firstname":"titi","lastname":"dfsdfd","score":100});
-
   }
 
   componentWillMount(){
