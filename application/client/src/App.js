@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import './App.css';
+import 'bootstrap-css'
 import io from 'socket.io-client';
 
 const socket = io()
