@@ -6,7 +6,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://mongo:27017/hulkdevfestgame');
-var ResultSchema = mongoose.Schema({ player: {firstName:String,lastName:String},game:{score:Number}});
+var ResultSchema = mongoose.Schema({ player: {firstName:String,lastName:String},game:{score:Number, rank:Number}});
 var Result = mongoose.model('Result',ResultSchema);
 
 
@@ -28,7 +28,7 @@ io.on('connection', function(socket){
 
   stream.on('data', function(result){
       console.log(result);
-      socket.emit('results',`{"firstname":"${result.player.firstName}","lastname":"${result.player.firstName}","score":${result.game.score}}`);
+      socket.emit('results',`{"id":"${result._id}", "firstname":"${result.player.firstName}","lastname":"${result.player.firstName}","score":${result.game.score},"rank":${result.game.rank}}`);
   }).on('error', function (error){
       console.log(error);
   }).on('close', function () {
