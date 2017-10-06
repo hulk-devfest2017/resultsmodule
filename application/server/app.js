@@ -28,7 +28,7 @@ io.on('connection', function(socket){
 
   stream.on('data', function(result){
       console.log(result);
-      socket.emit('results',`{"id":"${result._id}", "firstname":"${result.player.firstName}","lastname":"${result.player.firstName}","score":${result.game.score},"rank":${result.game.rank}}`);
+      socket.emit('results',`{"id":"${result._id}", "firstname":"${result.player.firstName}","lastname":"${result.player.lastName}","score":${result.game.score},"rank":${result.game.rank}}`);
   }).on('error', function (error){
       console.log(error);
   }).on('close', function () {
