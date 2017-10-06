@@ -8,20 +8,21 @@ const socket = io()
 
 
 class ResultRow extends React.Component {
+
   render(){
     return(
-      <tr>
-        <th scope="row">{this.props.score}</th>
-        <td>{this.props.firstname}</td>
-        <td>{this.props.lastname}</td>
+      <tr style={{"animation" : "fadeIt 10s ease-in-out"}} id={this.props.id}>
+        <th scope="row" style={{width:"10%", textAlign:"center"}}>{this.props.score}</th>
+        <td style={{width:"90%"}}>{this.props.playerName}</td>
       </tr>
     )
   }
+
 }
+
 class ResultTable extends React.Component {
 
   constructor() {
-    console.log('constructor');
     super();
     this.state = {
       results: Array(0)
@@ -29,16 +30,14 @@ class ResultTable extends React.Component {
   }
 
   componentWillMount(){
-     console.log('componentWillMount');
-      var self = this;
-      socket.on('results', function (data) {
-        console.log(data);
-        console.log(self.state);
-        console.log(self);
-        var results = self.state.results.slice();
-        results.push(JSON.parse(data));
-        self.setState({results: results})
-      });
+    let self = this;
+    socket.on('results', function (data) {
+      console.log("New result !");
+      let results = self.state.results.slice();
+      results = [JSON.parse(data)].concat(results);
+      //results.push(JSON.parse(data));
+      self.setState({results: results});
+    });
   }
 
 
@@ -47,16 +46,16 @@ class ResultTable extends React.Component {
       <table className="table table-striped">
         <thead>
           <tr>
-            <th>Score</th>
-            <th>First Name</th>
-            <th>Last Name</th>
+            <th style={{width:"10%", "textAlign":"center"}}>Score</th>
+            <th style={{width:"90%"}}>Player</th>
           </tr>
         </thead>
         <tbody>
 
-        { this.state.results.map(
-          function(result) {
-            return <ResultRow firstname={result.firstname} lastname={result.lastname} score={result.score}/>
+        { 
+          this.state.results.map((result, index) => {
+            let playerName = result.firstname + " " + result.lastname.substring(0,1).toUpperCase() + "."
+            return <ResultRow playerName={playerName} score={result.score} id={result.id} key={result.id} />
           })
         }
 
@@ -70,9 +69,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <div><img src="images/sqli.gif" alt="SQLI" height="100px" width="auto"/> </div>
         <div className="container">
           <header>
-            <h1>Results</h1>
+            <h1>DevFest Hulk Challenge 2017</h1>
           </header>
           <ResultTable />
         </div>
