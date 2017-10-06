@@ -5,7 +5,7 @@ const io = require('socket.io')(http);
 const path = require('path');
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/hulkdevfestgame');
+mongoose.connect('mongodb://mongo:27017/hulkdevfestgame');
 var ResultSchema = mongoose.Schema({ player: {firstName:String,lastName:String},game:{score:Number, rank:Number}});
 var Result = mongoose.model('Result',ResultSchema);
 
