@@ -60,7 +60,10 @@ class ResultTable extends React.Component {
 
         { 
           this.state.results.map((result, index) => {
-            let playerName = result.firstname + " " + result.lastname.substring(0,1).toUpperCase() + "."
+            let playerName = result.firstname
+            if(result.lastname && result.lastname !== "undefined") {
+              playerName += " " + result.lastname.substring(0,1).toUpperCase() + "."
+            }
             return <ResultRow playerName={playerName} score={result.score} id={result.id} rank={result.rank} key={result.id} />
           })
         }
