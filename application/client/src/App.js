@@ -12,8 +12,15 @@ class ResultRow extends React.Component {
   render(){
     return(
       <tr style={{"animation" : "fadeIt 10s ease-in-out"}} id={this.props.id}>
-        <th scope="row" style={{width:"10%", textAlign:"center"}}>{this.props.score}</th>
-        <td style={{width:"90%"}}>{this.props.playerName}</td>
+        <th scope="row" style={{width:"10%"}}>
+          {this.props.score}
+        </th>
+        <td style={{width:"10%"}}>
+          <img alt="hero" className="hero-image" src={"images/ranks/rank_" + this.props.rank + ".png"} />
+        </td>
+        <td style={{width:"80%", textAlign:"left"}}>
+          {this.props.playerName}
+        </td>
       </tr>
     )
   }
@@ -32,10 +39,9 @@ class ResultTable extends React.Component {
   componentWillMount(){
     let self = this;
     socket.on('results', function (data) {
-      console.log("New result !");
+      console.log("New result !", data);
       let results = self.state.results.slice();
       results = [JSON.parse(data)].concat(results);
-      //results.push(JSON.parse(data));
       self.setState({results: results});
     });
   }
@@ -43,11 +49,11 @@ class ResultTable extends React.Component {
 
   render() {
     return (
-      <table className="table table-striped">
+      <table className="table table-striped" id="results">
         <thead>
           <tr>
             <th style={{width:"10%", "textAlign":"center"}}>Score</th>
-            <th style={{width:"90%"}}>Player</th>
+            <th style={{width:"90%"}} colSpan="2">Player</th>
           </tr>
         </thead>
         <tbody>
@@ -55,7 +61,7 @@ class ResultTable extends React.Component {
         { 
           this.state.results.map((result, index) => {
             let playerName = result.firstname + " " + result.lastname.substring(0,1).toUpperCase() + "."
-            return <ResultRow playerName={playerName} score={result.score} id={result.id} key={result.id} />
+            return <ResultRow playerName={playerName} score={result.score} id={result.id} rank={result.rank} key={result.id} />
           })
         }
 
